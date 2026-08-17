@@ -1,1 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ImmuneProblem｜免疫學習徑</title>
+<style>
+  :root{
+    --bg-0:#070c14;
+    --bg-1:#0d1524;
+    --card:#111b2e;
+    --card-border:#213353;
+    --ink:#e7edf7;
+    --ink-dim:#8b96ad;
+    --fitc:#6dffb0;     /* immunofluorescence green */
+    --dapi:#6fa8ff;     /* nuclear stain blue */
+    --texasred:#ff7a7a; /* counterstain red */
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --sans: 'IBM Plex Sans', system-ui, sans-serif;
+    --display: 'Space Grotesk', var(--sans);
+  }
 
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  body{
+    background:
+      radial-gradient(ellipse 60% 45% at 22% 8%, rgba(109,255,176,0.10), transparent 60%),
+      radial-gradient(ellipse 55% 40% at 82% 78%, rgba(111,168,255,0.10), transparent 60%),
+      var(--bg-0);
+    color:var(--ink);
+    font-family:var(--sans);
+    min-height:100vh;
+    padding:64px 24px 100px;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* faint dot-grid like a slide field */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image: radial-gradient(rgba(139,150,173,0.14) 1px, transparent 1px);
+    background-size: 26px 26px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:1040px; margin:0 auto; position:relative; z-index:1;}
+
+  .crumb{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--ink-dim);
+    letter-spacing:.03em;
+    margin-bottom:28px;
+    display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+  }
+  .crumb b{color:var(--fitc); font-weight:500;}
+  .crumb span{opacity:.5;}
+
+  header{margin-bottom:64px;}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--fitc);
+    margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow .dot{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--fitc);
+    box-shadow:0 0 8px 2px rgba(109,255,176,.7);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1; transform:scale(1);}
+    50%{opacity:.4; transform:scale(.7);}
+  }
+
+  h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(34px,5vw,54px);
+    line-height:1.15;
+    letter-spacing:-0.01em;
+    max-width:720px;
+  }
+  h1 em{
+    font-style:normal;
+    color:var(--fitc);
+  }
+
+  .sub{
+    margin-top:18px;
+    max-width:560px;
+    color:var(--ink-dim);
+    font-size:15.5px;
+    line-height:1.75;
+  }
+
+  /* ---- diagram ---- */
+  .diagram{
+    position:relative;
+    margin:0 auto 80px;
+    max-width:920px;
+  }
+
+  svg.connectors{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    overflow:visible;
+  }
+  svg.connectors path{
+    fill:none;
+    stroke-width:1.6;
+    stroke-dasharray:5 6;
+    animation:dash 30s linear infinite;
+  }
+  @keyframes dash{ to{ stroke-dashoffset:-500; } }
+  .l-overview{stroke:var(--fitc); opacity:.55;}
+  .l-hygiene{stroke:var(--dapi); opacity:.5;}
+  .l-cross{stroke:var(--texasred); opacity:.35; stroke-dasharray:2 7;}
+
+  .node-grid{
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+    align-items:start;
+  }
+
+  .card{
+    background:linear-gradient(180deg, var(--card), var(--bg-1));
+    border:1px solid var(--card-border);
+    border-radius:14px;
+    padding:26px 22px 24px;
+    text-decoration:none;
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    position:relative;
+    transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    min-height:220px;
+  }
+  .card:hover{
+    transform:translateY(-5px);
+    border-color:var(--accent, var(--fitc));
+    box-shadow:0 16px 40px -18px rgba(0,0,0,.6), 0 0 0 1px var(--accent, var(--fitc)) inset;
+  }
+  .card:focus-visible{
+    outline:2px solid var(--accent, var(--fitc));
+    outline-offset:3px;
+  }
+
+  .card .tag{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.08em;
+    color:var(--accent);
+    display:flex; align-items:center; gap:8px;
+  }
+  .card .tag .ring{
+    width:9px; height:9px; border-radius:50%;
+    border:1.6px solid var(--accent);
+    position:relative;
+  }
+  .card .tag .ring::after{
+    content:"";
+    position:absolute; inset:2px;
+    border-radius:50%;
+    background:var(--accent);
+    opacity:.8;
+  }
+
+  .card h2{
+    font-family:var(--display);
+    font-size:19px;
+    font-weight:600;
+    line-height:1.35;
+  }
+  .card h2 small{
+    display:block;
+    font-family:var(--sans);
+    font-weight:400;
+    font-size:12.5px;
+    color:var(--ink-dim);
+    margin-top:3px;
+  }
+
+  .card p{
+    font-size:13.5px;
+    color:var(--ink-dim);
+    line-height:1.65;
+    flex:1;
+  }
+
+  .card .go{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--accent);
+    display:flex; align-items:center; gap:6px;
+  }
+  .card .go svg{width:12px; height:12px; transition:transform .2s ease;}
+  .card:hover .go svg{transform:translateX(3px);}
+
+  .card.overview{grid-column:2; --accent:var(--fitc);}
+  .card.hygiene{grid-column:1; margin-top:64px; --accent:var(--dapi);}
+  .card.bronchitis{grid-column:3; margin-top:64px; --accent:var(--texasred);}
+
+  .card.overview::before{
+    content:"樞紐";
+    position:absolute; top:14px; right:16px;
+    font-family:var(--mono); font-size:10px; color:var(--ink-dim);
+    letter-spacing:.08em;
+  }
+
+  /* ---- legend / footer ---- */
+  .legend{
+    display:flex; gap:26px; flex-wrap:wrap;
+    justify-content:center;
+    margin:8px 0 56px;
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--ink-dim);
+  }
+  .legend span{display:flex; align-items:center; gap:7px;}
+  .legend i{width:16px; height:2px; display:inline-block; border-radius:2px;}
+
+  footer{
+    text-align:center;
+    color:var(--ink-dim);
+    font-family:var(--mono);
+    font-size:11.5px;
+    letter-spacing:.03em;
+    border-top:1px solid var(--card-border);
+    padding-top:22px;
+  }
+
+  @media (max-width:760px){
+    .node-grid{grid-template-columns:1fr;}
+    .card.overview, .card.hygiene, .card.bronchitis{grid-column:1; margin-top:0;}
+    svg.connectors{display:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .eyebrow .dot, svg.connectors path{animation:none;}
+    .card{transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="crumb">
+    <span>d8600010-crypto</span><span>/</span>
+    <span>MyBook</span><span>/</span>
+    <span>MedicalEducation</span><span>/</span>
+    <b>ImmuneProblem</b>
+  </div>
+
+  <header>
+    <div class="eyebrow"><span class="dot"></span>Immunology Study Set</div>
+    <h1>免疫系統學習徑<br><em>三份筆記，一張脈絡圖。</em></h1>
+    <p class="sub">
+      這個資料夾收錄了三份與免疫相關的筆記。下方以「總覽 → 理論 → 臨床病例」
+      的節點關係呈現彼此的連結，點擊任一張卡片即可開啟對應頁面。
+    </p>
+  </header>
+
+  <div class="diagram">
+    <svg class="connectors" viewBox="0 0 920 340" preserveAspectRatio="none" aria-hidden="true">
+      <path class="l-overview" d="M 460,150 C 460,210 260,210 250,268"></path>
+      <path class="l-overview" d="M 460,150 C 460,210 660,210 670,268"></path>
+      <path class="l-cross"    d="M 250,300 C 420,340 500,340 670,300"></path>
+    </svg>
+
+    <div class="node-grid">
+      <a class="card hygiene" href="HygieneTheory.html">
+        <span class="tag"><span class="ring"></span>THEORY · 01</span>
+        <h2>衛生假說<small>HygieneTheory.html</small></h2>
+        <p>探討幼年時期微生物暴露量與免疫系統發展、過敏及自體免疫傾向之間的關係，作為理解免疫失調成因的理論基礎。</p>
+        <span class="go">開啟頁面
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+
+      <a class="card overview" href="ImmuneView.html">
+        <span class="tag"><span class="ring"></span>OVERVIEW · HUB</span>
+        <h2>免疫系統總覽<small>ImmuneView.html</small></h2>
+        <p>整合先天與後天免疫機制、主要細胞與訊號路徑，作為連結理論與臨床案例的核心筆記。</p>
+        <span class="go">開啟頁面
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+
+      <a class="card bronchitis" href="AcuteBronchitis.html">
+        <span class="tag"><span class="ring"></span>CASE · 02</span>
+        <h2>急性支氣管炎<small>AcuteBronchitis.html</small></h2>
+        <p>以呼吸道感染為例的臨床病例筆記，說明免疫反應在急性發炎過程中的實際表現與病程演變。</p>
+        <span class="go">開啟頁面
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:var(--fitc)"></i>總覽 → 分支筆記</span>
+    <span><i style="background:var(--dapi)"></i>理論基礎</span>
+    <span><i style="background:var(--texasred)"></i>理論與病例的關聯</span>
+  </div>
+
+  <footer>
+    MedicalEducation / ImmuneProblem — 3 notes indexed
+  </footer>
+
+</div>
+</body>
+</html>
