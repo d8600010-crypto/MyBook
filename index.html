@@ -1,1 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jimmy 的寫作專區：一般醫學教育、醫療心理學、社區醫學、運動醫學與心理學、社會智能、教育系統重建。">
+  <title>Jimmy 的寫作專區｜首頁</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #18212f;
+      --muted: #687386;
+      --accent: #315efb;
+      --accent-soft: #eaf0ff;
+      --border: #e4e8f0;
+      --shadow: 0 10px 30px rgba(24, 33, 47, 0.08);
+    }
 
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC",
+                   "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(135deg, #18284d, #315efb);
+      color: white;
+      padding: 72px 24px 64px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      letter-spacing: -0.03em;
+    }
+
+    header p {
+      max-width: 780px;
+      margin: auto;
+      font-size: 1.1rem;
+      opacity: 0.92;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+
+    .intro {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 42px;
+    }
+
+    .intro h2 {
+      margin-bottom: 8px;
+      font-size: 1.8rem;
+    }
+
+    .intro p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      display: block;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease,
+                  border-color 0.2s ease;
+      min-height: 230px;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: #b9c7f7;
+      box-shadow: 0 16px 36px rgba(24, 33, 47, 0.12);
+    }
+
+    .number {
+      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 24px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      background: white;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 52px 20px 48px; }
+      main { padding: 36px 18px 56px; }
+      .card { padding: 24px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Jimmy 的寫作專區</h1>
+    <p>
+      從醫學、心理學、社區、運動、社會智能到教育，
+      用專業知識理解人，也用人文觀點重新思考健康與社會。
+    </p>
+  </header>
+
+  <main>
+
+    <section class="intro">
+      <h2>寫作索引</h2>
+      <p>
+        六大寫作主題，連結醫學知識、人類行為、教育與社會，
+        讓複雜的專業議題變得容易理解、可以思考，也能實際應用。
+      </p>
+    </section>
+
+    <section class="grid">
+
+      <a class="card" href="01_general_medical_education.html">
+        <span class="number">01</span>
+        <h3>一般民眾醫學教育</h3>
+        <p>
+          將醫學知識轉化為一般人容易理解的內容，
+          包含健康促進、疾病預防、常見疾病、檢查、治療，
+          以及日常生活中的醫療決策。
+        </p>
+      </a>
+
+      <a class="card" href="02_medical_psychology.html">
+        <span class="number">02</span>
+        <h3>醫療心理學</h3>
+        <p>
+          探討醫學與心理學之間的關係，
+          包含焦慮、壓力、疾病適應、行為改變、
+          醫病溝通，以及疾病背後的心理經驗。
+        </p>
+      </a>
+
+      <a class="card" href="03_community_medicine.html">
+        <span class="number">03</span>
+        <h3>社區醫學</h3>
+        <p>
+          從個人走向群體，關注社區健康、疾病預防、
+          公共衛生、職場健康、健康不平等，
+          以及如何建立更健康的社會。
+        </p>
+      </a>
+
+      <a class="card" href="04_sports_medicine_psychology.html">
+        <span class="number">04</span>
+        <h3>運動醫學與運動心理學</h3>
+        <p>
+          以運動醫學為基礎，特別關注心理層面，
+          包含動機、運動表現、恢復、心理韌性、
+          自信、習慣建立，以及身心連結。
+        </p>
+      </a>
+
+      <a class="card" href="05_social_intelligence.html">
+        <span class="number">05</span>
+        <h3>社會智能</h3>
+        <p>
+          理解人與人之間的互動，
+          探討溝通、同理心、情緒覺察、衝突管理、
+          合作與建立健康人際關係的能力。
+        </p>
+      </a>
+
+      <a class="card" href="06_education_system_rebuild.html">
+        <span class="number">06</span>
+        <h3>教育系統重建</h3>
+        <p>
+          重新思考下一世代的教育，
+          包含教師、家長、學生、情緒教育、
+          批判性思考、合作學習，以及教育制度改革。
+        </p>
+      </a>
+
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Jimmy 的寫作專區
+    ｜醫學・心理學・教育・社會
+  </footer>
+
+</body>
+</html>
